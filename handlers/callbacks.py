@@ -13,3 +13,9 @@ async def open_special_menu(callback: CallbackQuery):
         reply_markup=special_menu
     )
     await callback.answer()
+@router.callback_query(F.data == "back_main")
+async def back_main(callback: CallbackQuery):
+    await callback.message.edit_reply_markup(
+        reply_markup=main_menu
+    )
+    await callback.answer()
