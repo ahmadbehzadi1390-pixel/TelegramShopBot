@@ -1,34 +1,42 @@
-from aiogram import Router, F
-from aiogram.types import CallbackQuery
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from keyboards.stars_menu import stars_menu
-from keyboards.special_menu import special_menu
-
-router = Router()
-
-
-@router.callback_query(F.data == "stars")
-async def open_stars_menu(callback: CallbackQuery):
-    await callback.message.edit_reply_markup(
-        reply_markup=stars_menu
-    )
-    await callback.answer()
-
-
-@router.callback_query(F.data == "back_special")
-async def back_special(callback: CallbackQuery):
-    await callback.message.edit_reply_markup(
-        reply_markup=special_menu
-    )
-    await callback.answer()
-
-
-@router.callback_query(F.data.startswith("stars_"))
-async def stars_order(callback: CallbackQuery):
-    amount = callback.data.split("_")[1]
-
-    await callback.message.edit_text(
-        f"⭐ سفارش {amount} استار تلگرام\n\n"
-        "🔄 این بخش در حال تکمیل است..."
-    )
-    await callback.answer()
+stars_menu = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="⭐ 50 استار",
+                callback_data="stars_50"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="⭐ 100 استار",
+                callback_data="stars_100"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="⭐ 250 استار",
+                callback_data="stars_250"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="⭐ 500 استار",
+                callback_data="stars_500"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="⭐ 1000 استار",
+                callback_data="stars_1000"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="🔙 بازگشت",
+                callback_data="back_special"
+            )
+        ]
+    ]
+)
