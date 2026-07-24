@@ -1,30 +1,25 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram import Router, F
+from aiogram.types import CallbackQuery
 
-special_menu = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton(
-                text="🌟 استارز تلگرام",
-                callback_data="stars"
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="💎 پرمیوم تلگرام",
-                callback_data="premium"
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="🚀 بوست گروه و کانال",
-                callback_data="boost"
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text="🔙 بازگشت",
-                callback_data="back_main"
-            )
-        ]
-    ]
-)
+from keyboards.main_menu import main_menu
+from keyboards.special_menu import special_menu
+
+router = Router()
+
+
+# ⭐ خدمات ویژه
+@router.callback_query(F.data == "special_services")
+async def open_special_menu(callback: CallbackQuery):
+    await callback.message.edit_reply_markup(
+        reply_markup=special_menu
+    )
+    await callback.answer()
+
+
+# 🔙 بازگشت به منوی اصلی
+@router.callback_query(F.data == "back_main")
+async def back_main(callback: CallbackQuery):
+    await callback.message.edit_reply_markup(
+        reply_markup=main_menu
+    )
+    await callback.answer()
