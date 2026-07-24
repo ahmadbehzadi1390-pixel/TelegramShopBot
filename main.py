@@ -14,7 +14,6 @@ async def main():
 
     dp = Dispatcher()
 
-    # ثبت همه روترها
     dp.include_router(start_router)
     dp.include_router(callback_router)
     dp.include_router(stars_router)
