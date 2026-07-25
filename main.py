@@ -4,12 +4,17 @@ from aiogram import Bot, Dispatcher
 
 from config.settings import BOT_TOKEN
 
+from database.db import create_tables
+
 from handlers.start import router as start_router
 from handlers.callbacks import router as callback_router
 from handlers.stars import router as stars_router
 
 
 async def main():
+    # ساخت دیتابیس و جدول‌ها
+    create_tables()
+
     bot = Bot(token=BOT_TOKEN)
 
     dp = Dispatcher()
